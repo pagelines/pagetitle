@@ -1,0 +1,8 @@
+== Description ==
+
+Display PageLines DMS Page Titles automatically, with optional manual override per-page (global and per-page settings). Includes animation, font-size, and other customizations. Even has a subtitle area. Auto titles, manual titles, and subtitles all support shortcodes.
+
+== Changelog ==
+
+= 1.0 =
+* Initial release

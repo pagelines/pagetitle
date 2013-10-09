@@ -310,9 +310,8 @@ Possible to-do's:
 		if(function_exists('pl_has_editor') && pl_has_editor()){} else { return; };
 
 		// Get Page ID
-		global $pagelines_ID;
-		$oset = array('post_id' => $pagelines_ID);
-		$postid = $oset->post_id;
+		global $post;
+		$postid = $post->ID;
 
 		// PAGE TITLE
 		if($this->opt('pagetitle_title') == 'manual'){
@@ -335,7 +334,7 @@ Possible to-do's:
 
 		// SUBTITLE
 		$subtitletext = $this->opt('pagetitle_subtitle');
-		$subtitletext = do_shortcode($subtitle);
+		$subtitletext = do_shortcode($subtitletext);
 
 		// IF NO TITLES
 		if(!$titletext && !$subtitletext){

@@ -5,7 +5,7 @@ Author: TourKick (Clifford P)
 Author URI: http://tourkick.com/?utm_source=pagelines&utm_medium=section&utm_content=authoruri&utm_campaign=pagetitle_section
 Description: Display PageLines DMS Page Titles automatically, with optional manual override per-page (global and per-page settings). Includes animation, font-size, and other customizations. Even has a subtitle area. Auto titles, manual titles, and subtitles all support shortcodes.
 Demo: http://www.pagelinestheme.com/pagetitle-section?utm_source=pagelines&utm_medium=section&utm_content=demolink&utm_campaign=pagetitle_section
-Version: 1.0
+Version: 1.1
 Class Name: DMSPageTitle
 Filter: component
 Cloning: true
@@ -306,12 +306,11 @@ Possible to-do's:
 
 	function section_template() {
 
-		// Check for PageLines DMS
-		if(function_exists('pl_has_editor') && pl_has_editor()){} else { return; };
-
-		// Get Page ID
-		global $post;
-		$postid = $post->ID;
+		// Check for DMS
+		if( function_exists('pl_has_editor') && pl_has_editor() ){
+			global $post;
+			$postid = $post->ID;
+		} else { return; };
 
 		// PAGE TITLE
 		if($this->opt('pagetitle_title') == 'manual'){

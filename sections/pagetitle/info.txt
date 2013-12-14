@@ -4,5 +4,8 @@ Display PageLines DMS Page Titles automatically, with optional manual override p
 
 == Changelog ==
 
+= 1.1 =
+* Fix WP_DEBUG notices
+
 = 1.0 =
 * Initial release

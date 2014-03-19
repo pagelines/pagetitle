@@ -5,7 +5,7 @@ Author: TourKick (Clifford P)
 Author URI: http://tourkick.com/?utm_source=pagelines&utm_medium=section&utm_content=authoruri&utm_campaign=pagetitle_section
 Description: Display PageLines DMS Page Titles automatically, with optional manual override per-page (global and per-page settings). Includes animation, font-size, and other customizations. Even has a subtitle area. Auto titles, manual titles, and subtitles all support shortcodes.
 Demo: http://www.pagelinestheme.com/pagetitle-section?utm_source=pagelines&utm_medium=section&utm_content=demolink&utm_campaign=pagetitle_section
-Version: 1.2
+Version: 2.0
 Class Name: DMSPageTitle
 Filter: component
 Cloning: true
@@ -162,116 +162,116 @@ Possible to-do's:
 			),
 			array(
 				'type'		=> 'multi',
-				'title'		=> 'Override: Special Pages\' Automatic Titles',
+				'title'		=> 'Override: Special Pages\' Automatic Titles<br/><span style="color:darkred;">Blue text is what you can override</span>',
 				'key'		=> 'pagetitle_text_special',
 				'opts'		=> array(
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_home',
-						'label'	=> __( 'Blog', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Blog</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_search',
-						'label'	=> __( 'Search Results', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Search Results</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_author',
-						'label'	=> __( 'Author Archive', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Author Archive</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_category',
-						'label'	=> __( 'Category Archive', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Category Archive</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_tag',
-						'label'	=> __( 'Tag Archive', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Tag Archive</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_daily',
-						'label'	=> __( 'Daily Archive', 'tk_pagetitle' ),
+						'label'	=> __( 'Daily Archive (Default: <span style="color:blue;">Archive:</span> <full date>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_monthly',
-						'label'	=> __( 'Monthly Archive', 'tk_pagetitle' ),
+						'label'	=> __( 'Monthly Archive (Default: <span style="color:blue;">Archive:</span> <month>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_yearly',
-						'label'	=> __( 'Yearly Archive', 'tk_pagetitle' ),
+						'label'	=> __( 'Yearly Archive (Default: <span style="color:blue;">Archive:</span> <year>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_other',
-						'label'	=> __( 'Other Archives (e.g. Custom Post Type Archives, Default: Archive)', 'tk_pagetitle' ),
+						'label'	=> __( 'Other Archives (e.g. Custom Post Type Archives, Default: <post type archive title> <span style="color:blue;">Archive</span>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_404',
-						'label'	=> __( '404 Error', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">404 Error</span>', 'tk_pagetitle' ),
 					),
 
 				)
 			),
 			array(
 				'type'		=> 'multi',
-				'title'		=> 'Override: Special Pages\' Automatic SUB-Titles',
-				'key'		=> 'pagetitle_text_special_sub',
+				'title'		=> 'Override: Special Pages\' Automatic SUB-Titles<br/><span style="color:darkred;">Blue text is what you can override</span>',
+				'key'		=> 'pagetitle_text_special_subs',
 				'opts'		=> array(
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_home_sub',
-						'label'	=> __( 'Blog (Default: none)', 'tk_pagetitle' ),
+						'label'	=> __( 'Blog (Default: #_of_posts post_type_label <span style="color:blue;">___</span>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_search_sub',
-						'label'	=> __( 'Showing search results for:', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Showing search results for:</span> search_query', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_author_sub',
-						'label'	=> __( 'Posts by:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">by</span> author_display_name', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_category_sub',
-						'label'	=> __( 'Currently viewing the category:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">in</span> single_category_title', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_tag_sub',
-						'label'	=> __( 'Currently viewing the tag:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">tagged</span> single_tag_title', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_daily_sub',
-						'label'	=> __( 'The Day\'s Archives:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_monthly_sub',
-						'label'	=> __( 'The Month\'s Archives:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_yearly_sub',
-						'label'	=> __( 'The Year\'s Archives:', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_other_sub',
-						'label'	=> __( 'Other Archives (Default: none)', 'tk_pagetitle' ),
+						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">___</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_404_sub',
-						'label'	=> __( 'Sorry, Not Found', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Sorry, Not Found</span>', 'tk_pagetitle' ),
 					),
 
 				)
@@ -457,13 +457,29 @@ Possible to-do's:
 				$subtitletext = pl_setting('pagetitle_subtitle') ? pl_setting('pagetitle_subtitle') : '';
 					$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : $subtitletext;
 			} elseif( is_home() ) {
+				global $wp_query;
+				$numposts = $wp_query->found_posts;
+				$posttype = get_post_type();
+				$posttypeobject = get_post_type_object($posttype);
+				$nameofposts = $posttypeobject->label;
+
 			 	$titletext = pl_setting('pagetitle_special_home') ? pl_setting('pagetitle_special_home') : 'Blog';
+
 				$subtitletext = pl_setting('pagetitle_special_home_sub') ? pl_setting('pagetitle_special_home_sub') : '';
+					$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+
 			} elseif( is_search() ) {
-			 	$titletext = pl_setting('pagetitle_special_search') ? pl_setting('pagetitle_special_search') : 'Search';
+			 	$titletext = pl_setting('pagetitle_special_search') ? pl_setting('pagetitle_special_search') : 'Search Results';
+
 				$subtitletext = pl_setting('pagetitle_special_search_sub') ? pl_setting('pagetitle_special_search_sub') : 'Showing search results for:';
 					$subtitletext = sprintf( '%s "%s"', $subtitletext, get_search_query() );
+
 			} elseif( is_archive() ) {
+				global $wp_query;
+				$numposts = $wp_query->found_posts;
+				$posttype = get_post_type();
+				$posttypeobject = get_post_type_object($posttype);
+				$nameofposts = $posttypeobject->label;
 
 				if (is_author()) {
 					global $author;
@@ -473,41 +489,48 @@ Possible to-do's:
 
 					$titletext = pl_setting('pagetitle_special_archive_author') ? pl_setting('pagetitle_special_archive_author') : 'Author Archive';
 
-					$subtitletext = pl_setting('pagetitle_special_archive_author_sub') ? pl_setting('pagetitle_special_archive_author_sub') : 'Posts by:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, $currentauthor->display_name );
+					$subtitletext = pl_setting('pagetitle_special_archive_author_sub') ? pl_setting('pagetitle_special_archive_author_sub') : 'by';
+						$subtitletext = sprintf( '%s %s %s %s', $numposts, $nameofposts, $subtitletext, $currentauthor->display_name );
 
 				} elseif( is_category() ) {
 				 	$titletext = pl_setting('pagetitle_special_category') ? pl_setting('pagetitle_special_category') : 'Category Archive';
 
-					$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : 'Currently viewing the category:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, single_cat_title( false, false ) );
+					$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : 'in';
+						$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_cat_title( false, false ) );
 
 				} elseif( is_tag() ) {
 				 	$titletext = pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag Archive';
 
-					$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : 'Currently viewing the tag:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, single_tag_title( false, false ) );
+					$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : 'tagged';
+						$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_tag_title( false, false ) );
 
-				} elseif( is_tax() ) {
-//				 	$titletext = pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag';
+				}
+				/*
+				elseif( is_tax() ) {
+				 	$titletext = pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag';
 
-				} elseif ( is_day() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_daily') ? pl_setting('pagetitle_special_archive_daily') : 'Daily Archive';
+				}
+				*/
+				elseif ( is_day() ) {
+				 	$titletext = pl_setting('pagetitle_special_archive_daily') ? pl_setting('pagetitle_special_archive_daily') : 'Archive:';
+					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('l, F j, Y') );
 
-					$subtitletext = pl_setting('pagetitle_special_archive_daily_sub') ? pl_setting('pagetitle_special_archive_daily_sub') : 'The Day\'s Archive:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, get_the_time('l, F j, Y') );
+					$subtitletext = pl_setting('pagetitle_special_archive_daily_sub') ? pl_setting('pagetitle_special_archive_daily_sub') : 'Published';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 
 				} elseif ( is_month() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_monthly') ? pl_setting('pagetitle_special_archive_monthly') : 'Monthly Archive';
+				 	$titletext = pl_setting('pagetitle_special_archive_monthly') ? pl_setting('pagetitle_special_archive_monthly') : 'Archive:';
+					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('F Y') );
 
-					$subtitletext = pl_setting('pagetitle_special_archive_monthly_sub') ? pl_setting('pagetitle_special_archive_monthly_sub') : 'The Month\'s Archive:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, get_the_time('F Y') );
+					$subtitletext = pl_setting('pagetitle_special_archive_monthly_sub') ? pl_setting('pagetitle_special_archive_monthly_sub') : 'Published';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 
 				} elseif ( is_year() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_yearly') ? pl_setting('pagetitle_special_archive_yearly') : 'Yearly Archive';
+				 	$titletext = pl_setting('pagetitle_special_archive_yearly') ? pl_setting('pagetitle_special_archive_yearly') : 'Archive: Year';
+					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('Y') );
 
-					$subtitletext = pl_setting('pagetitle_special_archive_yearly_sub') ? pl_setting('pagetitle_special_archive_yearly_sub') : 'The Year\'s Archive:';
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, get_the_time('Y') );
+					$subtitletext = pl_setting('pagetitle_special_archive_yearly_sub') ? pl_setting('pagetitle_special_archive_yearly_sub') : 'Published';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 
 				} else {
 
@@ -516,6 +539,7 @@ Possible to-do's:
 							$titletext = sprintf( '%s %s', post_type_archive_title( false, false ), $titletext );
 
 						$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 					}
 
 					if ( ! isset( $titletext ) ) {
@@ -524,6 +548,7 @@ Possible to-do's:
 							$titletext = $o->name;
 								$titletext = sprintf( '%s "%s"', $titletext, post_type_archive_title( false, false ) );
 							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 						}
 					}
 
@@ -532,6 +557,7 @@ Possible to-do's:
 							$titletext = sprintf( '%s %s', the_date(), $titletext );
 
 						$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 					}
 
 				}

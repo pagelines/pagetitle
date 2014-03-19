@@ -4,8 +4,8 @@ Display PageLines DMS Page Titles automatically, with optional manual override p
 
 == Changelog ==
 
-= 1.2 =
-* Add automatic titles and sub-titles for special pages (e.g. blog, category, etc.) with options to override
+= 2.0 =
+* Add automatic titles and sub-titles for special pages (e.g. blog, category, etc.), including count of posts and options to customize text
 * Fixed few minor issues including better usability for how defaults get set
 * Proper textdomain for options
 * Removed loading:active plugin tag

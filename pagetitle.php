@@ -8,5 +8,5 @@ Description: Display PageLines DMS Page Titles automatically, with optional manu
 Demo: http://www.pagelinestheme.com/pagetitle-section?utm_source=pagelines&utm_medium=section&utm_content=demolink&utm_campaign=pagetitle_section
 PageLines: true
 Class Name: DMSPageTitle
-Version: 1.1
+Version: 1.2
 */

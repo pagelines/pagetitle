@@ -5,7 +5,7 @@ Author: TourKick (Clifford P)
 Author URI: http://tourkick.com/?utm_source=pagelines&utm_medium=section&utm_content=authoruri&utm_campaign=pagetitle_section
 Description: Display PageLines DMS Page Titles automatically, with optional manual override per-page (global and per-page settings). Includes animation, font-size, and other customizations. Even has a subtitle area. Auto titles, manual titles, and subtitles all support shortcodes.
 Demo: http://www.pagelinestheme.com/pagetitle-section?utm_source=pagelines&utm_medium=section&utm_content=demolink&utm_campaign=pagetitle_section
-Version: 2.0
+Version: 2.1
 Class Name: DMSPageTitle
 Filter: component
 Cloning: true
@@ -15,9 +15,32 @@ v3: true
 class DMSPageTitle extends PageLinesSection {
 
 /*
-Possible to-do's:
-- excerpt as auto-created subtitle
+Notes/Ideas:
+
+* Subtitle manual priority
+* is_tax not working as it was
+
 - separate alignment for title and subtitle
+
+- is_tax options
+- turn off for post formats
+- # %%format_type%% %%post_type%% for archives of post formats
+
+- shortcode or %% counts instead of hard-coded
+
+- if a Special Page's individual scope is manual, it doesn't turn it off
+
+
+- from PageHeader:
+	pl-animation pl-slidedown
+
+	function before_section_template( $location = '' ) {
+
+		$this->wrapper_classes['special'] = 'pl-scroll-translate';
+
+	}
+
+
 */
 
 
@@ -46,14 +69,27 @@ Possible to-do's:
 				'key'		=> 'pagetitle_text',
 				'opts'		=> array(
 					array(
-						'type' 			=> 'select',
-						'key'			=> 'pagetitle_title',
-						'label' 		=> 'Page Title Display',
-						//'default'		=> 'auto',
-						'help' 	=> __( 'Manual Titles, if entered, always override Auto Titles.', 'tk_pagetitle' ),
-						'opts'			=> array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_title',
+						'label' 	=> __('Page Title Display', 'tk_pagetitle' ),
+						//'default'	=> 'auto',
+						'help' 		=> __( 'Manual Titles, if entered, will override Auto Titles even in auto mode.', 'tk_pagetitle' ),
+						'opts'		=> array(
 							'auto'		=> array('name' => 'Auto Title (Default)'),
-							'manual'		=> array('name' => 'Manual Input Only'),
+							'manual'	=> array('name' => 'Manual Input Only but with Auto for Special Pages'),
+							'manualnospecial'	=> array('name' => 'Manual WITHOUT Auto for Special Pages'),
+						)
+					),
+					array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_subtitleauto',
+						'label' 	=> __('Page Subtitle Display', 'tk_pagetitle' ),
+						//'default'	=> 'auto',
+						'help' 		=> __( 'Manual Subtitles, if entered, will override Auto Subtitles even in auto mode.<br/>Excerpts will not be displayed unless a custom excerpt is written.', 'tk_pagetitle' ),
+						'opts'		=> array(
+							'onlyspecial'	=> array('name' => 'Auto Subtitle on Special Pages Only (Default)'),
+							'excerpt'		=> array('name' => 'Excerpt as Subtitle on Single + Auto Subtitle on Special Pages'),
+							'off'			=> array('name' => 'NO Auto Subtitle on Special Pages'),
 						)
 					),
 					array(
@@ -292,12 +328,23 @@ Possible to-do's:
 					array(
 						'type' 			=> 'select',
 						'key'			=> 'pagetitle_title',
-						'label' 		=> 'Page Title Display',
+						'label' 		=> 'Page Title Display (Override)',
 						'default'		=> '',
 						'help' 	=> __( 'Manual Titles, if entered, always override Auto Titles.', 'tk_pagetitle' ),
 						'opts'			=> array(
-							'auto'		=> array('name' => 'Auto Title (Default)'),
-							'manual'		=> array('name' => 'Manual Input Only'),
+							'auto'		=> array('name' => 'Auto Title'),
+							'manual'	=> array('name' => 'Manual Input Only'),
+						)
+					),
+					array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_subtitleauto',
+						'label' 	=> __('Page Subtitle Display (Override)', 'tk_pagetitle' ),
+						//'default'	=> 'auto',
+						'help' 		=> __( 'Manual Subtitles, if entered, will override Auto Subtitles even in auto mode.<br/>Excerpts will not be displayed unless a custom excerpt is written.', 'tk_pagetitle' ),
+						'opts'		=> array(
+							'excerpt'		=> array('name' => 'Excerpt as Subtitle on Single'),
+							'off'			=> array('name' => 'NO Auto Subtitle on Single (Override Global setting)'),
 						)
 					),
 					array(
@@ -424,38 +471,69 @@ Possible to-do's:
 		// Check for DMS
 		if( function_exists('pl_has_editor') && pl_has_editor() ){} else { return; };
 
-		// prep the title
-		$manualtext = '';
-
-		if( is_page() || is_single() ){
-			if( pl_setting('pagetitle_title') == 'manual'
-			  || $this->opt('pagetitle_title') == 'manual' ) {
-				$autotitle = false;
-
-				$manualtext = pl_setting('pagetitle_title_manual') ? pl_setting('pagetitle_title_manual') : '';
-					$manualtext = $this->opt('pagetitle_title_manual') ? $this->opt('pagetitle_title_manual') : $manualtext;
-
-			} else {
-				$autotitle = true;
-			}
-		} else {
-			$autotitle = true;
-		}
-
-
 		//build the title
+		$autotitle = $this->opt('pagetitle_title') ? $this->opt('pagetitle_title') : pl_setting('pagetitle_title'); //use local if set, else use global
+		$autotitle = $autotitle ? $autotitle : 'auto'; //default if neither local nor global are set
+
+		$autosubtitle = $this->opt('pagetitle_subtitleauto') ? $this->opt('pagetitle_subtitleauto') : pl_setting('pagetitle_subtitleauto'); //use local if set, else use global
+		$autosubtitle = $autosubtitle ? $autosubtitle : 'onlyspecial'; //default if neither local nor global are set
+
+
+
+		$titletext = $this->opt('pagetitle_title_manual') ? $this->opt('pagetitle_title_manual') : '';
+		$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : '';
+
 		//is_paged, is_attachment
-		if($manualtext){
-			$titletext = $manualtext;
-		} elseif ($autotitle){
-			if( is_page() || is_single() ){
+		//is_tax
+
+
+		if( $autotitle == 'manualnospecial' ){ //can only be set at global level
+		} else {
+
+			//set Special Pages' global defaults -- consider pulling from option defaults
+
+			$ishome = 'Blog';
+			$ishomesub = '';
+			$issearch = 'Search Results';
+			$issearchsub = 'Showing search results for:';
+			$isauthor = 'Author Archive';
+			$isauthorsub = 'by';
+			$iscategory = 'Category Archive';
+			$iscategorysub = 'in';
+			$istag = 'Tag Archive';
+			$istagsub = 'tagged';
+			//$istax = '';
+			//$istaxsub = '';
+			$isday = 'Archive:';
+			$isdaysub = 'Published';
+			$ismonth = 'Archive:';
+			$ismonthsub = 'Published';
+			$isyear = 'Archive: Year';
+			$isyearsub = 'Published';
+			$isposttypearchive = 'Archive';
+			$isposttypearchivesub = '';
+			$other = 'Archive';//$isarchive = '';
+			$othersub = '';//$isarchivesub = '';
+			$is404 = '404 Error';
+			$is404sub = 'Sorry, Not Found';
+
+
+			if( is_page()
+			  || is_single() ) {
 				global $post;
 				$postid = $post->ID;
 
-				$titletext = get_the_title($postid);
+				$titletext = $titletext ? $titletext : get_the_title($postid);
 
-				$subtitletext = pl_setting('pagetitle_subtitle') ? pl_setting('pagetitle_subtitle') : '';
-					$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : $subtitletext;
+				if( is_single() //don't want Pages' excerpts being displayed on a page
+				  && $autosubtitle == 'excerpt' ) {
+					$subtitletext = $post->post_excerpt; //don't use get_the_excerpt() because that will create an excerpt if not entered
+					// http://codex.wordpress.org/Function_Reference/get_the_excerpt
+					// could also consider adding option to truncate if too long
+				}
+				//if manually entered, use that no matter what
+				$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : $subtitletext; //there is no global setting
+
 			} elseif( is_home() ) {
 				global $wp_query;
 				$numposts = $wp_query->found_posts;
@@ -463,17 +541,18 @@ Possible to-do's:
 				$posttypeobject = get_post_type_object($posttype);
 				$nameofposts = $posttypeobject->label;
 
-			 	$titletext = pl_setting('pagetitle_special_home') ? pl_setting('pagetitle_special_home') : 'Blog';
-
-				$subtitletext = pl_setting('pagetitle_special_home_sub') ? pl_setting('pagetitle_special_home_sub') : '';
-					$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
-
+			 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_home') ? pl_setting('pagetitle_special_home') : $ishome );
+			 	if( $autosubtitle != 'off' ) {
+					$subtitletext = pl_setting('pagetitle_special_home_sub') ? pl_setting('pagetitle_special_home_sub') : $ishomesub;
+						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+				}
 			} elseif( is_search() ) {
-			 	$titletext = pl_setting('pagetitle_special_search') ? pl_setting('pagetitle_special_search') : 'Search Results';
+			 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_search') ? pl_setting('pagetitle_special_search') : $issearch );
 
-				$subtitletext = pl_setting('pagetitle_special_search_sub') ? pl_setting('pagetitle_special_search_sub') : 'Showing search results for:';
-					$subtitletext = sprintf( '%s "%s"', $subtitletext, get_search_query() );
-
+			 	if( $autosubtitle != 'off' ) {
+					$subtitletext = pl_setting('pagetitle_special_search_sub') ? pl_setting('pagetitle_special_search_sub') : $issearchsub;
+						$subtitletext = sprintf( '%s "%s"', $subtitletext, get_search_query() );
+				}
 			} elseif( is_archive() ) {
 				global $wp_query;
 				$numposts = $wp_query->found_posts;
@@ -487,91 +566,139 @@ Possible to-do's:
 
 					$currentauthor = ( isset( $_GET['author_name'] ) ) ? get_user_by( 'slug', $author_name ) : get_userdata( intval( $author ) );
 
-					$titletext = pl_setting('pagetitle_special_archive_author') ? pl_setting('pagetitle_special_archive_author') : 'Author Archive';
+					$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_archive_author') ? pl_setting('pagetitle_special_archive_author') : $isauthor );
 
-					$subtitletext = pl_setting('pagetitle_special_archive_author_sub') ? pl_setting('pagetitle_special_archive_author_sub') : 'by';
-						$subtitletext = sprintf( '%s %s %s %s', $numposts, $nameofposts, $subtitletext, $currentauthor->display_name );
-
+					if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_archive_author_sub') ? pl_setting('pagetitle_special_archive_author_sub') : $isauthorsub;
+							$subtitletext = sprintf( '%s %s %s %s', $numposts, $nameofposts, $subtitletext, $currentauthor->display_name );
+					}
 				} elseif( is_category() ) {
-				 	$titletext = pl_setting('pagetitle_special_category') ? pl_setting('pagetitle_special_category') : 'Category Archive';
+				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_category') ? pl_setting('pagetitle_special_category') : $iscategory );
 
-					$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : 'in';
-						$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_cat_title( false, false ) );
-
+				 	if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : $iscategorysub;
+							$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_cat_title( '', false ) );
+					}
 				} elseif( is_tag() ) {
-				 	$titletext = pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag Archive';
+				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : $istag );
 
-					$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : 'tagged';
-						$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_tag_title( false, false ) );
-
+				 	if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : $istagsub;
+							$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_tag_title( '', false ) );
+					}
 				}
 				/*
 				elseif( is_tax() ) {
-				 	$titletext = pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag';
+					global $wp_query, $post;
+					plprint($wp_query);
+					plprint($post);
+
+					if(is_tax()) echo "is_tax()<br/>";
+					if(is_tax('post_format')) echo "is_tax('post_format')<br/>";
+					if(is_tax('post_format','post-format-gallery')) echo "is_tax('post_format','post-format-gallery')<br/>";
+					if(is_tax('post_format','post-format-link')) echo "is_tax('post_format','post-format-link')<br/>";
+					if(is_tax('post_format','post-format-quote')) echo "is_tax('post_format','post-format-quote')<br/>";
+					$format = get_post_format($postid);
+					if ( false === $format ) {
+						$format = 'standard';
+					}
+					echo get_post_format_link($format);
+
+					global $post;
+					$postid = $post->ID;
+
+					// get post format
+					$format = get_post_format($postid);
+					if ( false === $format ) {
+						$format = 'standard';
+					}
+
+				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag' );
 
 				}
 				*/
 				elseif ( is_day() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_daily') ? pl_setting('pagetitle_special_archive_daily') : 'Archive:';
-					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('l, F j, Y') );
+				 	if( ! $titletext ) {
+				 		$titletext = pl_setting('pagetitle_special_archive_daily') ? pl_setting('pagetitle_special_archive_daily') : $isday;
+					 		//if
+						 	$titletext = $titletext ? sprintf( '%s %s', $titletext, get_the_time('l, F j, Y') ): $titletext;
+					}
 
-					$subtitletext = pl_setting('pagetitle_special_archive_daily_sub') ? pl_setting('pagetitle_special_archive_daily_sub') : 'Published';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
-
+					if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_archive_daily_sub') ? pl_setting('pagetitle_special_archive_daily_sub') : $isdaysub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+					}
 				} elseif ( is_month() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_monthly') ? pl_setting('pagetitle_special_archive_monthly') : 'Archive:';
-					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('F Y') );
+				 	if( ! $titletext ) {
+					 	$titletext = pl_setting('pagetitle_special_archive_monthly') ? pl_setting('pagetitle_special_archive_monthly') : $ismonth;
+					 		//if
+						 	$titletext = $titletext ? sprintf( '%s %s', $titletext, get_the_time('F Y') ) : $titletext;
+					}
 
-					$subtitletext = pl_setting('pagetitle_special_archive_monthly_sub') ? pl_setting('pagetitle_special_archive_monthly_sub') : 'Published';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
-
+				 	if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_archive_monthly_sub') ? pl_setting('pagetitle_special_archive_monthly_sub') : $ismonthsub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+					}
 				} elseif ( is_year() ) {
-				 	$titletext = pl_setting('pagetitle_special_archive_yearly') ? pl_setting('pagetitle_special_archive_yearly') : 'Archive: Year';
-					 	$titletext = sprintf( '%s %s', $titletext, get_the_time('Y') );
+				 	if( ! $titletext ) {
+					 	$titletext = pl_setting('pagetitle_special_archive_yearly') ? pl_setting('pagetitle_special_archive_yearly') : $isyear;
+					 		//if
+						 	$titletext = $titletext ? sprintf( '%s %s', $titletext, get_the_time('Y') ) : $titletext;
+					}
 
-					$subtitletext = pl_setting('pagetitle_special_archive_yearly_sub') ? pl_setting('pagetitle_special_archive_yearly_sub') : 'Published';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
-
+					if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_archive_yearly_sub') ? pl_setting('pagetitle_special_archive_yearly_sub') : $isyearsub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+					}
 				} else {
 
 					if ( is_post_type_archive() ) {
-					 	$titletext = pl_setting('pagetitle_special_archive_other') ? pl_setting('pagetitle_special_archive_other') : 'Archive';
-							$titletext = sprintf( '%s %s', post_type_archive_title( false, false ), $titletext );
+					 	if( ! $titletext ) {
+						 	$titletext = pl_setting('pagetitle_special_archive_other') ? pl_setting('pagetitle_special_archive_other') : $isposttypearchive;
+								$titletext = sprintf( '%s %s', post_type_archive_title( '', false ), $titletext );
+						}
 
-						$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
-					}
-
-					if ( ! isset( $titletext ) ) {
-						$o = get_queried_object();
-						if ( isset( $o->name ) ) {
-							$titletext = $o->name;
-								$titletext = sprintf( '%s "%s"', $titletext, post_type_archive_title( false, false ) );
-							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+						if( $autosubtitle != 'off' ) {
+							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $isposttypearchivesub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
 						}
 					}
 
-					if ( ! isset( $titletext ) ) {
-					 	$titletext = pl_setting('pagetitle_special_archive_other') ? pl_setting('pagetitle_special_archive_other') : 'Archive';
+					if( ! $titletext ) {
+						$o = get_queried_object();
+						if ( isset( $o->name ) ) {
+							$titletext = $o->name;
+								//$titletext = sprintf( '%s Archive', $titletext );
+
+							if( $autosubtitle != 'off' ) {
+									$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $othersub;
+								$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							}
+						}
+					}
+
+				 	if( ! $titletext ) {
+					 	$titletext = pl_setting('pagetitle_special_archive_other') ? pl_setting('pagetitle_special_archive_other') : $other;
 							$titletext = sprintf( '%s %s', the_date(), $titletext );
 
-						$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : '';
-						$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+						if( $autosubtitle != 'off' ) {
+							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $othersub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+						}
 					}
 
 				}
 
 			} elseif( is_404() ) {
-				$titletext = pl_setting('pagetitle_special_404') ? pl_setting('pagetitle_special_404') : '404 Error';
-				$subtitletext = pl_setting('pagetitle_special_404_sub') ? pl_setting('pagetitle_special_404_sub') : 'Sorry, Not Found';
+				$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_404') ? pl_setting('pagetitle_special_404') : $is404 );
+
+				if( $autosubtitle != 'off' ) {
+					$subtitletext = pl_setting('pagetitle_special_404_sub') ? pl_setting('pagetitle_special_404_sub') : $is404sub;
+				}
 			} else {
 				$titletext = '';
 				$subtitletext = '';
 			}
-		} else {
-			$titletext = '';
-			$subtitletext = '';
 		}
 
 		$titletext = $titletext ? do_shortcode($titletext) : '';
@@ -579,9 +706,8 @@ Possible to-do's:
 
 		// IF NO TITLES
 		if(!$titletext && !$subtitletext){
-			global $post;
-			$postid = $post->ID;
-			if(current_user_can('edit_post', $postid)){
+			$user = wp_get_current_user();
+			if( user_can( $user, 'edit_posts') ){
 				echo do_shortcode('[pl_alertbox type="info" closable="yes"]No Page Title. It will not display unless you edit this Page to add one or you manually enter one via PageLines DMS Section.[/pl_alertbox]');
 			} else {
 				return;

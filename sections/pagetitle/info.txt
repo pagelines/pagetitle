@@ -4,6 +4,12 @@ Display PageLines DMS Page Titles automatically, with optional manual override p
 
 == Changelog ==
 
+= 2.1 =
+* Added option to use the Excerpt as the automatic subtitle for single posts
+* Added option to turn off auto subtitles
+* Fixed so manual title overrides work again (were not working in all cases in v2.0)
+* Fixed taxonomy auto titles to not have empty double quotes
+
 = 2.0 =
 * Add automatic titles and sub-titles for special pages (e.g. blog, category, etc.), including count of posts and options to customize text
 * Fixed few minor issues including better usability for how defaults get set

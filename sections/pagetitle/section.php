@@ -17,8 +17,7 @@ class DMSPageTitle extends PageLinesSection {
 /*
 Notes/Ideas:
 
-* Subtitle manual priority
-* is_tax not working as it was
+- 1 Posts ... (should be Post)
 
 - separate alignment for title and subtitle
 
@@ -228,23 +227,28 @@ Notes/Ideas:
 					),
 					array(
 						'type'	=> 'text',
+						'key'	=> 'pagetitle_special_tax',
+						'label'	=> __( 'taxonomy_name <span style="color:blue;">Archive</span>', 'tk_pagetitle' ),
+					),
+					array(
+						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_daily',
-						'label'	=> __( 'Daily Archive (Default: <span style="color:blue;">Archive:</span> <full date>)', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Daily Archive:</span> full_date)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_monthly',
-						'label'	=> __( 'Monthly Archive (Default: <span style="color:blue;">Archive:</span> <month>)', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Monthly Archive:</span> month)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_yearly',
-						'label'	=> __( 'Yearly Archive (Default: <span style="color:blue;">Archive:</span> <year>)', 'tk_pagetitle' ),
+						'label'	=> __( '<span style="color:blue;">Annual Archive:</span> year)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_other',
-						'label'	=> __( 'Other Archives (e.g. Custom Post Type Archives, Default: <post type archive title> <span style="color:blue;">Archive</span>)', 'tk_pagetitle' ),
+						'label'	=> __( 'Other Archives (e.g. Custom Post Type Archives, Default: post_type_archive_title <span style="color:blue;">Archive</span>)', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
@@ -262,52 +266,57 @@ Notes/Ideas:
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_home_sub',
-						'label'	=> __( 'Blog (Default: #_of_posts post_type_label <span style="color:blue;">___</span>)', 'tk_pagetitle' ),
+						'label'	=> __( 'Blog: #_of_posts post_type_label <span style="color:blue;">___</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_search_sub',
-						'label'	=> __( '<span style="color:blue;">Showing search results for:</span> search_query', 'tk_pagetitle' ),
+						'label'	=> __( 'Search: <span style="color:blue;">Showing search results for:</span> search_query', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_author_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">by</span> author_display_name', 'tk_pagetitle' ),
+						'label'	=> __( 'Author: #_of_posts post_type_label <span style="color:blue;">by</span> author_display_name', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_category_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">in</span> single_category_title', 'tk_pagetitle' ),
+						'label'	=> __( 'Category: #_of_posts post_type_label <span style="color:blue;">in</span> single_category_title', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_tag_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">tagged</span> single_tag_title', 'tk_pagetitle' ),
+						'label'	=> __( 'Tag: #_of_posts post_type_label <span style="color:blue;">tagged</span> single_tag_title', 'tk_pagetitle' ),
+					),
+					array(
+						'type'	=> 'text',
+						'key'	=> 'pagetitle_special_tax_sub',
+						'label'	=> __( 'Taxonomy: #_of_posts post_type_label <span style="color:blue;">___</span> single_tag_title', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_daily_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
+						'label'	=> __( 'Daily: #_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_monthly_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
+						'label'	=> __( 'Monthly: #_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_yearly_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
+						'label'	=> __( 'Yearly: #_of_posts post_type_label <span style="color:blue;">Published</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_archive_other_sub',
-						'label'	=> __( '#_of_posts post_type_label <span style="color:blue;">___</span>', 'tk_pagetitle' ),
+						'label'	=> __( 'Other: #_of_posts post_type_label <span style="color:blue;">___</span>', 'tk_pagetitle' ),
 					),
 					array(
 						'type'	=> 'text',
 						'key'	=> 'pagetitle_special_404_sub',
-						'label'	=> __( '<span style="color:blue;">Sorry, Not Found</span>', 'tk_pagetitle' ),
+						'label'	=> __( '404: <span style="color:blue;">Sorry, Not Found</span>', 'tk_pagetitle' ),
 					),
 
 				)
@@ -502,13 +511,13 @@ Notes/Ideas:
 			$iscategorysub = 'in';
 			$istag = 'Tag Archive';
 			$istagsub = 'tagged';
-			//$istax = '';
-			//$istaxsub = '';
-			$isday = 'Archive:';
+			$istax = 'Archive';
+			$istaxsub = '';
+			$isday = 'Daily Archive:';
 			$isdaysub = 'Published';
-			$ismonth = 'Archive:';
+			$ismonth = 'Monthly Archive:';
 			$ismonthsub = 'Published';
-			$isyear = 'Archive: Year';
+			$isyear = 'Annual Archive:';
 			$isyearsub = 'Published';
 			$isposttypearchive = 'Archive';
 			$isposttypearchivesub = '';
@@ -586,24 +595,7 @@ Notes/Ideas:
 						$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : $istagsub;
 							$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_tag_title( '', false ) );
 					}
-				}
-				/*
-				elseif( is_tax() ) {
-					global $wp_query, $post;
-					plprint($wp_query);
-					plprint($post);
-
-					if(is_tax()) echo "is_tax()<br/>";
-					if(is_tax('post_format')) echo "is_tax('post_format')<br/>";
-					if(is_tax('post_format','post-format-gallery')) echo "is_tax('post_format','post-format-gallery')<br/>";
-					if(is_tax('post_format','post-format-link')) echo "is_tax('post_format','post-format-link')<br/>";
-					if(is_tax('post_format','post-format-quote')) echo "is_tax('post_format','post-format-quote')<br/>";
-					$format = get_post_format($postid);
-					if ( false === $format ) {
-						$format = 'standard';
-					}
-					echo get_post_format_link($format);
-
+				} elseif( is_tax() ) {
 					global $post;
 					$postid = $post->ID;
 
@@ -613,10 +605,27 @@ Notes/Ideas:
 						$format = 'standard';
 					}
 
-				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : 'Tag' );
+					//http://justintadlock.com/archives/2009/06/04/using-custom-taxonomies-to-create-a-movie-database -- To get the proper name of the taxonomy term (usually the archive page title), use this code:
+					$term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
+					$tax = $term->name;
+
+				 	if( ! $titletext ) {
+				 		$titletext = pl_setting('pagetitle_special_tax') ? pl_setting('pagetitle_special_tax') : $istax;
+					 		//if
+						 	$titletext = $titletext ? sprintf( '%s %s', $tax, $titletext ): $titletext;
+					}
+
+					if( $autosubtitle != 'off' ) {
+						$subtitletext = pl_setting('pagetitle_special_tax_sub') ? pl_setting('pagetitle_special_tax_sub') : $istaxsub;
+							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+					}
+
+
+
+				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tax') ? pl_setting('pagetitle_special_tax') : 'Tag' );
 
 				}
-				*/
+
 				elseif ( is_day() ) {
 				 	if( ! $titletext ) {
 				 		$titletext = pl_setting('pagetitle_special_archive_daily') ? pl_setting('pagetitle_special_archive_daily') : $isday;

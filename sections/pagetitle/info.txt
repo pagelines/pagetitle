@@ -4,6 +4,9 @@ Display PageLines DMS Page Titles automatically, with optional manual override p
 
 == Changelog ==
 
+= 2.2 =
+* Added option to DMS Global/Site Settings to enable displaying Excerpts on Pages too
+
 = 2.1 =
 * Added option to use the Excerpt as the automatic subtitle for single posts
 * Added option to turn off auto subtitles

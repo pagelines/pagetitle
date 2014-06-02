@@ -5,7 +5,6 @@ Author: TourKick (Clifford P)
 Author URI: http://tourkick.com/?utm_source=pagelines&utm_medium=section&utm_content=authoruri&utm_campaign=pagetitle_section
 Description: Display PageLines DMS Page Titles automatically, with optional manual override per-page (global and per-page settings). Includes animation, font-size, and other customizations. Even has a subtitle area. Auto titles, manual titles, and subtitles all support shortcodes.
 Demo: http://www.pagelinestheme.com/pagetitle-section?utm_source=pagelines&utm_medium=section&utm_content=demolink&utm_campaign=pagetitle_section
-Version: 2.1
 Class Name: DMSPageTitle
 Filter: component
 Cloning: true
@@ -89,6 +88,17 @@ Notes/Ideas:
 							'onlyspecial'	=> array('name' => 'Auto Subtitle on Special Pages Only (Default)'),
 							'excerpt'		=> array('name' => 'Excerpt as Subtitle on Single + Auto Subtitle on Special Pages'),
 							'off'			=> array('name' => 'NO Auto Subtitle on Special Pages'),
+						)
+					),
+					array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_pageexcerpts',
+						'label' 	=> __('(Advanced) Display Excerpts on Pages too?', 'tk_pagetitle' ),
+						//'default'	=> 'no',
+						'help' 		=> __( 'Only applies if you have <a href="http://wordpress.org/plugins/page-excerpt/" target="_blank">enabled Excerpts for the Page post type</a> and selected to display Excerpts for the Page Subtitle setting above.', 'tk_pagetitle' ),
+						'opts'		=> array(
+							'no'	=> array('name' => 'DO NOT Display Excerpts on Pages (Default)'),
+							'yes'	=> array('name' => 'DO Display Excerpts on Pages'),
 						)
 					),
 					array(
@@ -487,7 +497,7 @@ Notes/Ideas:
 		$autosubtitle = $this->opt('pagetitle_subtitleauto') ? $this->opt('pagetitle_subtitleauto') : pl_setting('pagetitle_subtitleauto'); //use local if set, else use global
 		$autosubtitle = $autosubtitle ? $autosubtitle : 'onlyspecial'; //default if neither local nor global are set
 
-
+		$pageexcerpts = pl_setting('pagetitle_pageexcerpts') ? pl_setting('pagetitle_pageexcerpts') : 'no';
 
 		$titletext = $this->opt('pagetitle_title_manual') ? $this->opt('pagetitle_title_manual') : '';
 		$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : '';
@@ -534,11 +544,13 @@ Notes/Ideas:
 
 				$titletext = $titletext ? $titletext : get_the_title($postid);
 
-				if( is_single() //don't want Pages' excerpts being displayed on a page
-				  && $autosubtitle == 'excerpt' ) {
-					$subtitletext = $post->post_excerpt; //don't use get_the_excerpt() because that will create an excerpt if not entered
-					// http://codex.wordpress.org/Function_Reference/get_the_excerpt
-					// could also consider adding option to truncate if too long
+				if( $autosubtitle == 'excerpt' ){
+					if( (is_page() && $pageexcerpts == 'yes')
+					 || (is_single()) ){
+						$subtitletext = $post->post_excerpt; //don't use get_the_excerpt() because that will create an excerpt if not entered
+						// http://codex.wordpress.org/Function_Reference/get_the_excerpt
+						// could also consider adding option to truncate if too long
+					  }
 				}
 				//if manually entered, use that no matter what
 				$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : $subtitletext; //there is no global setting

@@ -591,21 +591,21 @@ Notes/Ideas:
 
 					if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_archive_author_sub') ? pl_setting('pagetitle_special_archive_author_sub') : $isauthorsub;
-							$subtitletext = sprintf( '%s %s %s %s', $numposts, $nameofposts, $subtitletext, $currentauthor->display_name );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-currentauthor">%s</span>', $numposts, $nameofposts, $subtitletext, $currentauthor->display_name );
 					}
 				} elseif( is_category() ) {
 				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_category') ? pl_setting('pagetitle_special_category') : $iscategory );
 
 				 	if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : $iscategorysub;
-							$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_cat_title( '', false ) );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singlecat">"%s"</span>', $numposts, $nameofposts, $subtitletext, single_cat_title( '', false ) );
 					}
 				} elseif( is_tag() ) {
 				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : $istag );
 
 				 	if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : $istagsub;
-							$subtitletext = sprintf( '%s %s %s "%s"', $numposts, $nameofposts, $subtitletext, single_tag_title( '', false ) );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singletag">"%s"</span>', $numposts, $nameofposts, $subtitletext, single_tag_title( '', false ) );
 					}
 				} elseif( is_tax() ) {
 					global $post;
@@ -629,7 +629,7 @@ Notes/Ideas:
 
 					if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_tax_sub') ? pl_setting('pagetitle_special_tax_sub') : $istaxsub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 					}
 
 
@@ -647,7 +647,7 @@ Notes/Ideas:
 
 					if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_archive_daily_sub') ? pl_setting('pagetitle_special_archive_daily_sub') : $isdaysub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 					}
 				} elseif ( is_month() ) {
 				 	if( ! $titletext ) {
@@ -658,7 +658,7 @@ Notes/Ideas:
 
 				 	if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_archive_monthly_sub') ? pl_setting('pagetitle_special_archive_monthly_sub') : $ismonthsub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 					}
 				} elseif ( is_year() ) {
 				 	if( ! $titletext ) {
@@ -669,7 +669,7 @@ Notes/Ideas:
 
 					if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_archive_yearly_sub') ? pl_setting('pagetitle_special_archive_yearly_sub') : $isyearsub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 					}
 				} else {
 
@@ -681,7 +681,7 @@ Notes/Ideas:
 
 						if( $autosubtitle != 'off' ) {
 							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $isposttypearchivesub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 						}
 					}
 
@@ -693,7 +693,7 @@ Notes/Ideas:
 
 							if( $autosubtitle != 'off' ) {
 									$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $othersub;
-								$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+								$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 							}
 						}
 					}
@@ -704,7 +704,7 @@ Notes/Ideas:
 
 						if( $autosubtitle != 'off' ) {
 							$subtitletext = pl_setting('pagetitle_special_archive_other_sub') ? pl_setting('pagetitle_special_archive_other_sub') : $othersub;
-							$subtitletext = sprintf( '%s %s %s', $numposts, $nameofposts, $subtitletext );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span>', $numposts, $nameofposts, $subtitletext );
 						}
 					}
 
@@ -751,7 +751,7 @@ Notes/Ideas:
 			$titlesize = $this->opt('pagetitle_font_size') ? sprintf('font-size: %spx;', $this->opt('pagetitle_font_size')) : $titlesize;
 
 		// TITLE LINE
-		$title = $titletext ? sprintf( '<%s class="%s" style="%s">%s</%s>', $titletag, $titleclass, $titlesize, $titletext, $titletag ) : '';
+		$title = $titletext ? sprintf( '<%s class="pagetitle-titleline %s" style="%s">%s</%s>', $titletag, $titleclass, $titlesize, $titletext, $titletag ) : '';
 
 
 		// Subtitle Setup
@@ -766,7 +766,7 @@ Notes/Ideas:
 
 
 		// SUBTITLE LINE
-		$subtitle = $subtitletext ? sprintf('<%s class="%s" style="%s">%s</%s>', $subtitletag, $subtitleclass, $subtitlesize, $subtitletext, $subtitletag) : '';
+		$subtitle = $subtitletext ? sprintf('<%s class="pagetitle-subtitleline %s" style="%s">%s</%s>', $subtitletag, $subtitleclass, $subtitlesize, $subtitletext, $subtitletag) : '';
 
 
 		// Section Style Options

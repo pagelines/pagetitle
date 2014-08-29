@@ -4,6 +4,10 @@ Display PageLines DMS Page Titles automatically, with optional manual override p
 
 == Changelog ==
 
+= 2.3 =
+* Added CSS classes to allow targeting each piece of PageTitle, including: .pagetitle-titleline, .pagetitle-subtitleline, .pagetitle-numposts, .pagetitle-nameofposts, .pagetitle-subtitlecustomizable, and more
+* Updated artwork.
+
 = 2.2 =
 * Added option to DMS Global/Site Settings to enable displaying Excerpts on Pages too
 

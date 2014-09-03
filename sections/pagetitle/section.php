@@ -43,7 +43,7 @@ Notes/Ideas:
 
 
 	function section_persistent() {
-		add_filter('pl_settings_array', array(&$this, 'options'));
+		add_filter('pl_settings_array', array($this, 'options'));
 	}
 
     function options( $settings ){
@@ -63,8 +63,8 @@ Notes/Ideas:
         $global_opts = array(
 			array(
 				'type'		=> 'multi',
-				'title'		=> 'Title Text',
-				'key'		=> 'pagetitle_text',
+				'title'		=> 'Customizations',
+				'key'		=> 'pagetitle_config',
 				'opts'		=> array(
 					array(
 						'type'		=> 'select',
@@ -77,103 +77,6 @@ Notes/Ideas:
 							'manual'	=> array('name' => 'Manual Input Only but with Auto for Special Pages'),
 							'manualnospecial'	=> array('name' => 'Manual WITHOUT Auto for Special Pages'),
 						)
-					),
-					array(
-						'type'		=> 'select',
-						'key'		=> 'pagetitle_subtitleauto',
-						'label' 	=> __('Page Subtitle Display', 'tk_pagetitle' ),
-						//'default'	=> 'auto',
-						'help' 		=> __( 'Manual Subtitles, if entered, will override Auto Subtitles even in auto mode.<br/>Excerpts will not be displayed unless a custom excerpt is written.', 'tk_pagetitle' ),
-						'opts'		=> array(
-							'onlyspecial'	=> array('name' => 'Auto Subtitle on Special Pages Only (Default)'),
-							'excerpt'		=> array('name' => 'Excerpt as Subtitle on Single + Auto Subtitle on Special Pages'),
-							'off'			=> array('name' => 'NO Auto Subtitle on Special Pages'),
-						)
-					),
-					array(
-						'type'		=> 'select',
-						'key'		=> 'pagetitle_pageexcerpts',
-						'label' 	=> __('(Advanced) Display Excerpts on Pages too?', 'tk_pagetitle' ),
-						//'default'	=> 'no',
-						'help' 		=> __( 'Only applies if you have <a href="http://wordpress.org/plugins/page-excerpt/" target="_blank">enabled Excerpts for the Page post type</a> and selected to display Excerpts for the Page Subtitle setting above.', 'tk_pagetitle' ),
-						'opts'		=> array(
-							'no'	=> array('name' => 'DO NOT Display Excerpts on Pages (Default)'),
-							'yes'	=> array('name' => 'DO Display Excerpts on Pages'),
-						)
-					),
-					array(
-						'type' 			=> 'text',
-						'key'			=> 'pagetitle_global_class',
-						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) for the entire title and subtitle div. A global alternative to using the Standard Options -> Styling Classes to add custom classes to every post individually, although that still works too and is applied at a higher-level (i.e. before this div class).', 'tk_pagetitle' ),
-						'label' 		=> __( 'PageTitle Global Class (Optional)', 'tk_pagetitle' ),
-					),
-				)
-			),
-			array(
-				'type'		=> 'multi',
-				'title'		=> 'Customizations',
-				'key'		=> 'pagetitle_config',
-				'opts'		=> array(
-					array(
-						'type' 			=> 'select',
-						'key'			=> 'pagetitle_tag',
-						'label' 		=> 'Page Title HTML Tag',
-						//'default'		=> 'h1',
-						'opts'			=> array(
-							'h1'		=> array('name' => 'H1 (Default)'),
-							'h2'		=> array('name' => 'H2'),
-							'h3'		=> array('name' => 'H3'),
-							'h4'		=> array('name' => 'H4'),
-							'h5'		=> array('name' => 'H5'),
-							'h6'		=> array('name' => 'H6'),
-							'p'			=> array('name' => 'P (i.e. none)'),
-						)
-					),
-					array(
-						'type' 			=> 'text',
-						'key'			=> 'pagetitle_title_class',
-						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) just to the Heading HTML Tag (e.g. h1 class="..."). Use the Standard Options -> Styling Classes to add custom classes to the entire section.', 'tk_pagetitle' ),
-						'label' 		=> __( 'Page Title Heading Tag Class (Optional)', 'tk_pagetitle' ),
-					),
-					array(
-						'key'			=> 'pagetitle_font_size',
-						'type'			=> 'count_select',
-						'count_start'	=> 10,
-						'count_number'	=> 60,
-						'suffix'		=> 'px',
-						'title'			=> __( 'Page Title Font Size', 'tk_pagetitle' ),
-						'default'		=> '',
-					),
-					array(
-						'type' 			=> 'select',
-						'key'			=> 'pagetitle_tag_subtitle',
-						'label' 		=> 'Subtitle HTML Tag',
-						'help' 			=> __( 'It is always recommended to only have one H1 tag per page.', 'tk_pagetitle' ),
-						//'default'		=> 'p',
-						'opts'			=> array(
-							'h1'		=> array('name' => 'H1'),
-							'h2'		=> array('name' => 'H2'),
-							'h3'		=> array('name' => 'H3'),
-							'h4'		=> array('name' => 'H4'),
-							'h5'		=> array('name' => 'H5'),
-							'h6'		=> array('name' => 'H6'),
-							'p'			=> array('name' => 'P (Default)'),
-						)
-					),
-					array(
-						'type' 			=> 'text',
-						'key'			=> 'pagetitle_title_class_subtitle',
-						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) just to the Subtitle HTML Tag (e.g. p class="...").', 'tk_pagetitle' ),
-						'label' 		=> __( 'Subtitle Heading Tag Class (Optional)', 'tk_pagetitle' ),
-					),
-					array(
-						'key'			=> 'pagetitle_font_size_subtitle',
-						'type'			=> 'count_select',
-						'count_start'	=> 10,
-						'count_number'	=> 60,
-						'suffix'		=> 'px',
-						'title'			=> __( 'Subtitle Font Size', 'tk_pagetitle' ),
-						'default'		=> '',
 					),
 					array(
 						'type' 			=> 'select',
@@ -202,12 +105,127 @@ Notes/Ideas:
 						'help'		=> __( 'This option uses CSS padding shorthand. For example, use "15px 30px" for 15px padding top/bottom, and 30 left/right.', 'tk_pagetitle' ),
 
 					),
+					array(
+						'type' 			=> 'text',
+						'key'			=> 'pagetitle_global_class',
+						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) for the entire title and subtitle div. A global alternative to using the Standard Options -> Styling Classes to add custom classes to every post individually, although that still works too and is applied at a higher-level (i.e. before this div class).', 'tk_pagetitle' ),
+						'label' 		=> __( 'PageTitle Global Class (Optional)', 'tk_pagetitle' ),
+					),
 
 				)
 			),
 			array(
 				'type'		=> 'multi',
-				'title'		=> 'Override: Special Pages\' Automatic Titles<br/><span style="color:darkred;">Blue text is what you can override</span>',
+				'title'		=> 'Title Text Options',
+				'key'		=> 'pagetitle_title_options',
+				'opts'		=> array(
+					array(
+						'type' 			=> 'select',
+						'key'			=> 'pagetitle_tag',
+						'label' 		=> 'Title Text HTML Tag',
+						//'default'		=> 'h1',
+						'opts'			=> array(
+							'h1'		=> array('name' => 'H1 (Default)'),
+							'h2'		=> array('name' => 'H2'),
+							'h3'		=> array('name' => 'H3'),
+							'h4'		=> array('name' => 'H4'),
+							'h5'		=> array('name' => 'H5'),
+							'h6'		=> array('name' => 'H6'),
+							'p'			=> array('name' => 'P (i.e. none)'),
+						)
+					),
+					array(
+						'type' 			=> 'text',
+						'key'			=> 'pagetitle_title_class',
+						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) just to the Heading HTML Tag (e.g. h1 class="..."). Use the Standard Options -> Styling Classes to add custom classes to the entire section.', 'tk_pagetitle' ),
+						'label' 		=> __( 'Title Text Heading Tag Class (Optional)', 'tk_pagetitle' ),
+					),
+					array(
+						'key'			=> 'pagetitle_font_size',
+						'type'			=> 'count_select',
+						'count_start'	=> 10,
+						'count_number'	=> 60,
+						'suffix'		=> 'px',
+						'title'			=> __( 'Title Text Font Size', 'tk_pagetitle' ),
+						'default'		=> '',
+					),
+				)
+			),
+			array(
+				'type'		=> 'multi',
+				'title'		=> 'SUB-Title Text Options',
+				'key'		=> 'pagetitle_subtitle_options',
+				'opts'		=> array(
+					array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_subtitleauto',
+						'label' 	=> __('Subtitle Text Display', 'tk_pagetitle' ),
+						//'default'	=> 'auto',
+						'help' 		=> __( 'Manual Subtitles, if entered, will override Auto Subtitles even in auto mode.<br/>Excerpts will not be displayed unless a custom excerpt is written.', 'tk_pagetitle' ),
+						'opts'		=> array(
+							'onlyspecial'	=> array('name' => 'Auto Subtitle on Special Pages Only (Default)'),
+							'excerpt'		=> array('name' => 'Excerpt as Subtitle on Single + Auto Subtitle on Special Pages'),
+							'off'			=> array('name' => 'NO Auto Subtitle on Special Pages'),
+						)
+					),
+					array(
+						'type'		=> 'select',
+						'key'		=> 'pagetitle_pageexcerpts',
+						'label' 	=> __('(Advanced) Display Excerpts on Pages too?', 'tk_pagetitle' ),
+						//'default'	=> 'no',
+						'help' 		=> __( 'Only applies if you have <a href="http://wordpress.org/plugins/page-excerpt/" target="_blank">enabled Excerpts for the Page post type</a> and selected to display Excerpts for the Page Subtitle setting above.', 'tk_pagetitle' ),
+						'opts'		=> array(
+							'no'	=> array('name' => 'DO NOT Display Excerpts on Pages (Default)'),
+							'yes'	=> array('name' => 'DO Display Excerpts on Pages'),
+						)
+					),
+					array(
+						'type' 			=> 'select',
+						'key'			=> 'pagetitle_tag_subtitle',
+						'label' 		=> 'Subtitle Text HTML Tag',
+						'help' 			=> __( 'It is always recommended to only have one H1 tag per page.', 'tk_pagetitle' ),
+						//'default'		=> 'p',
+						'opts'			=> array(
+							'h1'		=> array('name' => 'H1'),
+							'h2'		=> array('name' => 'H2'),
+							'h3'		=> array('name' => 'H3'),
+							'h4'		=> array('name' => 'H4'),
+							'h5'		=> array('name' => 'H5'),
+							'h6'		=> array('name' => 'H6'),
+							'p'			=> array('name' => 'P (Default)'),
+						)
+					),
+					array(
+						'type' 			=> 'text',
+						'key'			=> 'pagetitle_title_class_subtitle',
+						'help' 	=> __( 'Insert a CSS Class (separate multiple with a space) just to the Subtitle HTML Tag (e.g. p class="...").', 'tk_pagetitle' ),
+						'label' 		=> __( 'Subtitle Text Heading Tag Class (Optional)', 'tk_pagetitle' ),
+					),
+					array(
+						'key'			=> 'pagetitle_font_size_subtitle',
+						'type'			=> 'count_select',
+						'count_start'	=> 10,
+						'count_number'	=> 60,
+						'suffix'		=> 'px',
+						'title'			=> __( 'Subtitle Text Font Size', 'tk_pagetitle' ),
+						'default'		=> '',
+					),
+					array(
+						'type'	=> 'text',
+						'key'	=> 'pagetitle_special_before_sub',
+						'label'	=> __( 'Before text for certain Special Pages\' subtitles (e.g. <span style="color:blue;">"</span> or <span style="color:blue;">\'</span> or <span style="color:blue;">-- </span>)', 'tk_pagetitle' ),
+					),
+					array(
+						'type'	=> 'text',
+						'key'	=> 'pagetitle_special_after_sub',
+						'label'	=> __( 'After text for certain Special Pages\' subtitles (e.g. <span style="color:blue;">"</span> or <span style="color:blue;">\'</span>)', 'tk_pagetitle' ),
+					),
+
+				)
+			),
+			array(
+				'type'		=> 'multi',
+				'title'		=> 'Override: Special Pages\' Automatic Title Text<br/><span style="color:darkred;">Blue text is what you can override</span>',
 				'key'		=> 'pagetitle_text_special',
 				'opts'		=> array(
 					array(
@@ -268,9 +286,10 @@ Notes/Ideas:
 
 				)
 			),
+
 			array(
 				'type'		=> 'multi',
-				'title'		=> 'Override: Special Pages\' Automatic SUB-Titles<br/><span style="color:darkred;">Blue text is what you can override</span>',
+				'title'		=> 'Override: Special Pages\' Automatic SUB-Title Text<br/><span style="color:darkred;">Blue text is what you can override</span>',
 				'key'		=> 'pagetitle_text_special_subs',
 				'opts'		=> array(
 					array(
@@ -499,6 +518,9 @@ Notes/Ideas:
 
 		$pageexcerpts = pl_setting('pagetitle_pageexcerpts') ? pl_setting('pagetitle_pageexcerpts') : 'no';
 
+		$subtitlebefore = pl_setting('pagetitle_special_before_sub') ? pl_setting('pagetitle_special_before_sub') : '';
+		$subtitleafter = pl_setting('pagetitle_special_after_sub') ? pl_setting('pagetitle_special_after_sub') : '';
+
 		$titletext = $this->opt('pagetitle_title_manual') ? $this->opt('pagetitle_title_manual') : '';
 		$subtitletext = $this->opt('pagetitle_subtitle') ? $this->opt('pagetitle_subtitle') : '';
 
@@ -572,7 +594,7 @@ Notes/Ideas:
 
 			 	if( $autosubtitle != 'off' ) {
 					$subtitletext = pl_setting('pagetitle_special_search_sub') ? pl_setting('pagetitle_special_search_sub') : $issearchsub;
-						$subtitletext = sprintf( '%s "%s"', $subtitletext, get_search_query() );
+						$subtitletext = sprintf( '%s %s%s%s', $subtitletext, $subtitlebefore, get_search_query(), $subtitleafter );
 				}
 			} elseif( is_archive() ) {
 				global $wp_query;
@@ -598,14 +620,14 @@ Notes/Ideas:
 
 				 	if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_category_sub') ? pl_setting('pagetitle_special_category_sub') : $iscategorysub;
-							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singlecat">"%s"</span>', $numposts, $nameofposts, $subtitletext, single_cat_title( '', false ) );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singlecat">%s%s%s</span>', $numposts, $nameofposts, $subtitletext, $subtitlebefore, single_cat_title( '', false ), $subtitleafter );
 					}
 				} elseif( is_tag() ) {
 				 	$titletext = $titletext ? $titletext : ( pl_setting('pagetitle_special_tag') ? pl_setting('pagetitle_special_tag') : $istag );
 
 				 	if( $autosubtitle != 'off' ) {
 						$subtitletext = pl_setting('pagetitle_special_tag_sub') ? pl_setting('pagetitle_special_tag_sub') : $istagsub;
-							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singletag">"%s"</span>', $numposts, $nameofposts, $subtitletext, single_tag_title( '', false ) );
+							$subtitletext = sprintf( '<span class="pagetitle-numposts">%s</span> <span class="pagetitle-nameofposts">%s</span> <span class="pagetitle-subtitlecustomizable">%s</span> <span class="pagetitle-singletag">%s%s%s</span>', $numposts, $nameofposts, $subtitletext, $subtitlebefore, single_tag_title( '', false ), $subtitleafter );
 					}
 				} elseif( is_tax() ) {
 					global $post;
